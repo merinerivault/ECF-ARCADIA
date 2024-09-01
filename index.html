@@ -10,34 +10,80 @@
     <title>Arcadia</title>
 </head>
 <body>
-    <header>  
-      <nav class="navbar navbar-expand-lg navbar-light bg-secondary">
+    <header> 
+      <!--Debut barre de navigation--> 
+      <nav class="navbar navbar-expand-lg navbar-light bg-secondary" data-bs-theme="dark">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">Arcadia</a>
+          <!--Logo Arcadia-->
+          <a class="navbar-brand" href="#" >
+            <img class="logo" src="Images/BONLOGO.jpg" alt="bootstrap" width="42" height="40"> ARCADIA
+          </a>
+          <!--Fin logo Arcadia-->
+          <!--Menu hamburger-->
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
+          <!--Fin menu hamburger-->
           <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
+            <ul class="navbar-nav ms-auto">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Accueil</a>
+                <a class="nav-link" href="/pages/home.html">Accueil</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Fonctionnalités</a>
+                <a class="nav-link" href="#">Services</a>
+              </li>
+              <!--Menu deroulant "Habitats"-->
+              <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" href="/" >Habitats
+                </button>
+                <ul class="dropdown-menu dropdown-menu-secondary" style="background-color: #345D3D;">
+                  <li><a class="dropdown-item" href="/">Jungle</a></li>
+                  <li><a class="dropdown-item" href="/">Savane</a></li>
+                  <li><a class="dropdown-item" href="/">Marais</a></li>
+                </ul>
+              </div>
+              <!--Fin enu deroulant "Habitats"-->
+              <li class="nav-item">
+                <a class="nav-link" href="/">Contacts</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Prix</a>
-              </li>
+                <a class="nav-link" href="/">Se connecter</a>
+              </li>    
             </ul>
-          </div>
+          </div>    
         </div>
       </nav>
+      <!--Fin barre de navigation-->
     </header>
       <main id="main-page">
         <!-- Le contenu de la page sera ici-->
       </main>  
     <footer>
-        Le footer
+      <footer class="bg-secondary text-white text-center footer">
+        <div class="row">
+            <div>
+                <h3 class="text-primary"></br>Nos horaires</h3></br>
+                <p>Du lundi au vendredi     10:00-17:30 </br>
+                   Samedi et dimanche       10:00-18:30
+                </p>
+            </div>
+            <div class="col-6"></br>
+                <p>Arcadia</br>
+                  36 rue Merlin</br>
+                  35380  Brocéliande
+                </p>
+            </div>
+            <div class="col-6"></br>
+                <p>Contact</br>
+                  zooarcadia@broceliande.com</br>
+                  01.03.75.56.48
+                </p>
+            </div>
+            <div>
+              <p><a href="pages/connexion.html">Se connecter</a></p>
+            </div>
+        </div>
+    </footer>
     </footer>
     <script type="module" src="Router/router.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
