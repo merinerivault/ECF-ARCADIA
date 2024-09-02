@@ -11976,7 +11976,7 @@ html {
 }
 
 main {
-  margin-bottom: 315px;
+  margin-bottom: 355px;
 }
 
 footer.footer {
@@ -11984,4 +11984,13 @@ footer.footer {
   position: absolute;
   bottom: 0;
   width: 100%;
+}
+
+p {
+  font-family: "Hind Marudai", serif;
+  font-size: 18px;
+}
+
+h1, .h1 {
+  font-family: "Montserrat", sans-serif;
 }/*# sourceMappingURL=main.css.map */
