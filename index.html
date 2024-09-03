@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -8,8 +8,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Hind+Madurai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="scss/main.css"/>
     <title>Arcadia</title>
-</head>
-<body>
+  </head>
+  <body>
     <header> 
       <!--Debut barre de navigation--> 
       <nav class="navbar navbar-expand-lg navbar-light bg-secondary" data-bs-theme="dark">
@@ -27,19 +27,19 @@
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
               <li class="nav-item">
-                <a class="nav-link" href="/pages/home.html">Accueil</a>
+                <a class="nav-link" href="/accueil">Accueil</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Services</a>
+                <a class="nav-link" href="/services">Services</a>
               </li>
               <!--Menu deroulant "Habitats"-->
               <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" href="/" >Habitats
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" href="/habitats" >Habitats
                 </button>
                 <ul class="dropdown-menu dropdown-menu-secondary" style="background-color: #345D3D;">
-                  <li><a class="dropdown-item" href="/">Jungle</a></li>
-                  <li><a class="dropdown-item" href="/">Savane</a></li>
-                  <li><a class="dropdown-item" href="/">Marais</a></li>
+                  <li><a class="dropdown-item" href="/jungle">Jungle</a></li>
+                  <li><a class="dropdown-item" href="/savane">Savane</a></li>
+                  <li><a class="dropdown-item" href="/marais">Marais</a></li>
                 </ul>
               </div>
               <!--Fin enu deroulant "Habitats"-->
@@ -47,7 +47,7 @@
                 <a class="nav-link" href="/">Contacts</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/">Se connecter</a>
+                <a class="nav-link" href="/connexion">Se connecter</a>
               </li>    
             </ul>
           </div>    
@@ -55,37 +55,43 @@
       </nav>
       <!--Fin barre de navigation-->
     </header>
-      <main id="main-page">
-        <!-- Le contenu de la page sera ici-->
-      </main>  
-    <footer>
-      <footer class="bg-secondary text-white text-center footer">
-        <div class="row">
-            <div>
-                <h3 class="text-primary"></br>Nos horaires</h3></br>
-                <p>Du lundi au vendredi     10:00-17:30 </br>
-                   Samedi et dimanche       10:00-18:30
+    <main id="main-page">
+      <!-- Le contenu de la page sera ici-->
+    </main>  
+    <!--Debut du footer-->
+    <footer class="bg-secondary text-white text-center footer">
+      <div class="row">
+          <div>
+            <h3 class="text-primary"></br>Nos horaires</h3></br>
+              <div class="row row-cols-1 row-cols-lg-2 align-items-center">
+                <p>
+                  Du lundi au vendredi     10:00-17:30 
                 </p>
-            </div>
-            <div class="col-4 col-md-6 col-lg-6"></br>
-                <p>Arcadia</br>
+                <p>
+                  Samedi et dimanche       10:00-18:30
+                </p>
+              </div>
+          </div>
+          <div class="col-4 col-md-6 col-lg-6"></br>
+              <p>Arcadia</br>
                   36 rue Merlin</br>
                   35380  Brocéliande
-                </p>
-            </div>
-            <div class="col-4 col-md-6 col-lg-6"></br>
-                <p>Contact</br>
+              </p>
+          </div>
+          <div class="col-4 col-md-6 col-lg-6"></br>
+              <p>Contact</br>
                   zooarcadia@broceliande.com</br>
                   01.03.75.56.48
-                </p>
-            </div>
-            <div>
-              <p><a href="pages/connexion.html">Se connecter</a></p>
-            </div>
+              </p>
+          </div>
+          <div>
+              <p><a href="/connexion">Se connecter</a></p>
+          </div>
         </div>
+      </footer>
     </footer>
-    </footer>
+    <!--Fin du footer-->
     <script type="module" src="Router/router.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+  </body>
 </html>

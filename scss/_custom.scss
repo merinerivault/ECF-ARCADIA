@@ -5,11 +5,16 @@
 
 $primary: #9FBF86;
 $secondary: #345D3D;
-$yellow: #FFDC82;
+$warning: #FFDC82;
 
 $font-family-sans-serif: "Montserrat", sans-serif !default;
-$font-family-serif: "Hind Marudai", serif !default ;
+$font-family-serif: "Hind Madurai", serif !default ;
 
+$container-max-widths: (
+   md: 600px,
+   lg: 1110px,
+
+);
 
 @import "../node_modules/bootstrap/scss/bootstrap";
 
