@@ -12,7 +12,7 @@ html{
 
 
 main{
-    margin-bottom: 430px;
+    margin-bottom: 373px;
 }
 
 footer.footer{
@@ -24,12 +24,19 @@ footer.footer{
 
 p{
     font-family: $font-family-serif;
-    font-size: 18px;
+    font-size: 16px;
 }
 
 h1{
     font-family: $font-family-sans-serif;
+    font-size: 20px;
 }
+
+h2{
+    font-family: $font-family-serif;
+    font-size: 18px;
+}
+
 .image-card{
     position:relative;
     &:hover{

@@ -11955,7 +11955,7 @@ html {
 }
 
 main {
-  margin-bottom: 430px;
+  margin-bottom: 373px;
 }
 
 footer.footer {
@@ -11967,11 +11967,17 @@ footer.footer {
 
 p {
   font-family: "Hind Madurai", serif;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 h1, .h1 {
   font-family: "Montserrat", sans-serif;
+  font-size: 20px;
+}
+
+h2, .h2 {
+  font-family: "Hind Madurai", serif;
+  font-size: 18px;
 }
 
 .image-card {
