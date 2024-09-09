@@ -12004,4 +12004,20 @@ h2, .h2 {
 #longeur {
   min-height: 1000px;
   padding-bottom: 0;
+}
+
+.form-label {
+  color: #345D3D;
+  font-family: "Hind Madurai", serif;
+  font-size: 16px;
+}
+
+.btn-primary {
+  font-family: "Hind Madurai", serif;
+  font-size: 16px;
+}
+
+.hero-scene {
+  position: relative;
+  height: 100%;
 }/*# sourceMappingURL=main.css.map */
