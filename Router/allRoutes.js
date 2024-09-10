@@ -21,9 +21,9 @@ export const allRoutes = [
     new Route("/lion", "Lion", "/pages/animaux/savane/lion.html"),
     new Route("/zebre", "Zebre", "/pages/animaux/savane/zebre.html"),
     new Route("/crocodile", "Crocodile", "/pages/animaux/marais/crocodile.html"),
-    new Route("/hippopotame", "Hippopotame", "/pages/animaux/marais/hippopotame.html")
-    new Route("/ibis", "Ibis", "/pages/animaux/marais/ibis.html")
-    new Route("/tortue", "Tortue", "/pages/animaux/marais/tortue.html")
+    new Route("/hippopotame", "Hippopotame", "/pages/animaux/marais/hippopotame.html"),
+    new Route("/ibis", "Ibis", "/pages/animaux/marais/ibis.html"),
+    new Route("/tortue", "Tortue", "/pages/animaux/marais/tortue.html"),
 ];
 
   
