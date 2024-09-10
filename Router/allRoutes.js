@@ -14,6 +14,8 @@ export const allRoutes = [
     new Route("/gorille", "Gorille", "/pages/animaux/jungle/gorille.html"),
     new Route("/jaguard", "Jaguard", "/pages/animaux/jungle/jaguard.html"),
     new Route("/python", "Python", "/pages/animaux/jungle/python.html"),
+    new Route("/perroquet", "Perroquet", "/pages/animaux/jungle/perroquet.html"),
+    new Route("/tigre", "Tigre", "/pages/animaux/jungle/tigre.html"),
 ];
 
   
