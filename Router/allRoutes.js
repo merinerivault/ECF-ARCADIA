@@ -12,6 +12,8 @@ export const allRoutes = [
     new Route("/infospratiques", "Infos pratiques", "/pages/infospratiques.html"),
     new Route("/connexion", "Se connecter", "/pages/auth/connexion.html"),
     new Route("/gorille", "Gorille", "/pages/animaux/jungle/gorille.html"),
+    new Route("/jaguard", "Jaguard", "/pages/animaux/jungle/jaguard.html"),
+    new Route("/python", "Python", "/pages/animaux/jungle/python.html"),
 ];
 
   
