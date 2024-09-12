@@ -15,6 +15,7 @@ export const allRoutes = [
     new Route("/jaguard", "Jaguard", "/pages/animaux/jungle/jaguard.html"),
     new Route("/python", "Python", "/pages/animaux/jungle/python.html"),
     new Route("/perroquet", "Perroquet", "/pages/animaux/jungle/perroquet.html"),
+    new Route("/tigre", "tigre", "/pages/animaux/jungle/tigre.html"),
     new Route("/elephant", "Elephant", "/pages/animaux/savane/elephant.html"),
     new Route("/giraffe", "Giraffe", "/pages/animaux/savane/giraffe.html"),
     new Route("/guepard", "Guépard", "/pages/animaux/savane/guepard.html"),
