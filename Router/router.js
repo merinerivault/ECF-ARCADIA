@@ -7,6 +7,12 @@ const route404 = new Route("404", "Page introuvable", "/pages/404.html");
 // Fonction pour récupérer la route correspondant à une URL donnée
 const getRouteByUrl = (url) => {
   let currentRoute = null;
+
+// Si l'utilisateur accède à la racine ("/" ou ""), rediriger vers "/accueil"
+if (url === "/" || url === "" || url === "/index.html") {
+  return new Route("/accueil", "Accueil", "/pages/home.html", "");
+}
+  
   // Parcours de toutes les routes pour trouver la correspondance
   allRoutes.forEach((element) => {
     if (element.url == url) {

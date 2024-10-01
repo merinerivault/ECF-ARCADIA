@@ -11978,6 +11978,7 @@ h1, .h1 {
 h2, .h2 {
   font-family: "Hind Madurai", serif;
   font-size: 18px;
+  padding: 3px;
 }
 
 .image-card {
