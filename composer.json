@@ -1,6 +1,0 @@
-{
-    "require": {
-        "doctrine/annotations": "^2.0",
-        "symfony/webpack-encore-bundle": "^2.2"
-    }
-}
