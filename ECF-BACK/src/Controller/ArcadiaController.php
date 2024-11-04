@@ -16,7 +16,7 @@ class ArcadiaController extends AbstractController
         // … Edite le restaurant et le sauvegarde en base de données
     }
 
-    #[Route('/{id}', name: 'delete', methods: 'DELETE')]   
+    #[Route('/{id}', name: 'delete', methods: 'DELETE',requirements: ['id' => '\d+'])]   
     public function delete(int $id): Response
     {
         // ... Supprime le restaurant de la base de données
