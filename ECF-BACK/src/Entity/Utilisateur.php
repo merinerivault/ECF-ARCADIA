@@ -13,13 +13,13 @@ class Utilisateur
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 50)]
-    private ?string $name = null;
+    #[ORM\Column(length: 100)]
+    private ?string $nom = null;
 
     #[ORM\Column(length: 100)]
-    private ?string $surname = null;
+    private ?string $prenom = null;
 
-    #[ORM\Column(length: 150)]
+    #[ORM\Column(length: 100)]
     private ?string $username = null;
 
     #[ORM\Column(length: 150)]
@@ -33,26 +33,26 @@ class Utilisateur
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getNom(): ?string
     {
-        return $this->name;
+        return $this->nom;
     }
 
-    public function setName(string $name): static
+    public function setNom(string $nom): static
     {
-        $this->name = $name;
+        $this->nom = $nom;
 
         return $this;
     }
 
-    public function getSurname(): ?string
+    public function getPrenom(): ?string
     {
-        return $this->surname;
+        return $this->prenom;
     }
 
-    public function setSurname(string $surname): static
+    public function setPrenom(string $prenom): static
     {
-        $this->surname = $surname;
+        $this->prenom = $prenom;
 
         return $this;
     }

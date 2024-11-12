@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20241112093105 extends AbstractMigration
+final class Version20241112142742 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,12 +20,16 @@ final class Version20241112093105 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE TABLE animal (id INT AUTO_INCREMENT NOT NULL, nom VARCHAR(100) NOT NULL, espece VARCHAR(255) NOT NULL, date_naissance DATETIME NOT NULL, description LONGTEXT NOT NULL, nourriture VARCHAR(255) NOT NULL, gramme_nourriture INT NOT NULL, date_passage DATETIME NOT NULL, id_image INT NOT NULL, id_habitat INT NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('ALTER TABLE animal ADD image_id INT NOT NULL');
+        $this->addSql('ALTER TABLE animal ADD CONSTRAINT FK_6AAB231F3DA5256D FOREIGN KEY (image_id) REFERENCES image (id)');
+        $this->addSql('CREATE INDEX IDX_6AAB231F3DA5256D ON animal (image_id)');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('DROP TABLE animal');
+        $this->addSql('ALTER TABLE animal DROP FOREIGN KEY FK_6AAB231F3DA5256D');
+        $this->addSql('DROP INDEX IDX_6AAB231F3DA5256D ON animal');
+        $this->addSql('ALTER TABLE animal DROP image_id');
     }
 }

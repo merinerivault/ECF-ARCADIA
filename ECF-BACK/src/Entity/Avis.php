@@ -23,9 +23,6 @@ class Avis
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $date = null;
 
-    #[ORM\Column(length: 100)]
-    private ?string $valider_par = null;
-
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $valider_le = null;
 
@@ -66,18 +63,6 @@ class Avis
     public function setDate(\DateTimeInterface $date): static
     {
         $this->date = $date;
-
-        return $this;
-    }
-
-    public function getValiderPar(): ?string
-    {
-        return $this->valider_par;
-    }
-
-    public function setValiderPar(string $valider_par): static
-    {
-        $this->valider_par = $valider_par;
 
         return $this;
     }

@@ -14,14 +14,17 @@ class Animal
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 100)]
+    #[ORM\Column(length: 50)]
     private ?string $nom = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 150)]
     private ?string $espece = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $date_naissance = null;
+
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $etat_sante = null;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
@@ -35,11 +38,9 @@ class Animal
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $date_passage = null;
 
-    #[ORM\Column]
-    private ?int $id_image = null;
-
-    #[ORM\Column]
-    private ?int $id_habitat = null;
+    #[ORM\ManyToOne(inversedBy: 'animals')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?image $image = null;
 
     public function getId(): ?int
     {
@@ -78,6 +79,18 @@ class Animal
     public function setDateNaissance(\DateTimeInterface $date_naissance): static
     {
         $this->date_naissance = $date_naissance;
+
+        return $this;
+    }
+
+    public function getEtatSante(): ?string
+    {
+        return $this->etat_sante;
+    }
+
+    public function setEtatSante(string $etat_sante): static
+    {
+        $this->etat_sante = $etat_sante;
 
         return $this;
     }
@@ -130,26 +143,14 @@ class Animal
         return $this;
     }
 
-    public function getIdImage(): ?int
+    public function getImage(): ?image
     {
-        return $this->id_image;
+        return $this->image;
     }
 
-    public function setIdImage(int $id_image): static
+    public function setImage(?image $image): static
     {
-        $this->id_image = $id_image;
-
-        return $this;
-    }
-
-    public function getIdHabitat(): ?int
-    {
-        return $this->id_habitat;
-    }
-
-    public function setIdHabitat(int $id_habitat): static
-    {
-        $this->id_habitat = $id_habitat;
+        $this->image = $image;
 
         return $this;
     }

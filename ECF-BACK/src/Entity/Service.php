@@ -14,14 +14,15 @@ class Service
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 100)]
     private ?string $nom = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    private ?string $ddescription = null;
+    private ?string $description = null;
 
-    #[ORM\Column]
-    private ?int $id_image = null;
+    #[ORM\ManyToOne(inversedBy: 'services')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?image $image = null;
 
     public function getId(): ?int
     {
@@ -40,26 +41,26 @@ class Service
         return $this;
     }
 
-    public function getDdescription(): ?string
+    public function getDescription(): ?string
     {
-        return $this->ddescription;
+        return $this->description;
     }
 
-    public function setDdescription(string $ddescription): static
+    public function setDescription(string $description): static
     {
-        $this->ddescription = $ddescription;
+        $this->description = $description;
 
         return $this;
     }
 
-    public function getIdImage(): ?int
+    public function getImage(): ?image
     {
-        return $this->id_image;
+        return $this->image;
     }
 
-    public function setIdImage(int $id_image): static
+    public function setImage(?image $image): static
     {
-        $this->id_image = $id_image;
+        $this->image = $image;
 
         return $this;
     }
