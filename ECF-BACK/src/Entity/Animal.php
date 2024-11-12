@@ -51,13 +51,14 @@ class Animal
     /**
      * @var Collection<int, CompteRenduVeterinaire>
      */
-    #[ORM\ManyToMany(targetEntity: CompteRenduVeterinaire::class, mappedBy: 'animal')]
+    #[ORM\OneToMany(targetEntity: CompteRenduVeterinaire::class, mappedBy: 'animal', orphanRemoval: true)]
     private Collection $compteRenduVeterinaires;
 
     public function __construct()
     {
         $this->compteRenduVeterinaires = new ArrayCollection();
     }
+
 
     public function getId(): ?int
     {
@@ -196,7 +197,7 @@ class Animal
     {
         if (!$this->compteRenduVeterinaires->contains($compteRenduVeterinaire)) {
             $this->compteRenduVeterinaires->add($compteRenduVeterinaire);
-            $compteRenduVeterinaire->addAnimal($this);
+            $compteRenduVeterinaire->setAnimal($this);
         }
 
         return $this;
@@ -205,7 +206,10 @@ class Animal
     public function removeCompteRenduVeterinaire(CompteRenduVeterinaire $compteRenduVeterinaire): static
     {
         if ($this->compteRenduVeterinaires->removeElement($compteRenduVeterinaire)) {
-            $compteRenduVeterinaire->removeAnimal($this);
+            // set the owning side to null (unless already changed)
+            if ($compteRenduVeterinaire->getAnimal() === $this) {
+                $compteRenduVeterinaire->setAnimal(null);
+            }
         }
 
         return $this;

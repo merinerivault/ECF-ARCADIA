@@ -26,16 +26,10 @@ class CompteRenduVeterinaire
     #[ORM\JoinColumn(nullable: false)]
     private ?veterinaire $veterinaire = null;
 
-    /**
-     * @var Collection<int, animal>
-     */
-    #[ORM\ManyToMany(targetEntity: animal::class, inversedBy: 'compteRenduVeterinaires')]
-    private Collection $animal;
+    #[ORM\ManyToOne(inversedBy: 'compteRenduVeterinaires')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?animal $animal = null;
 
-    public function __construct()
-    {
-        $this->animal = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -78,27 +72,16 @@ class CompteRenduVeterinaire
         return $this;
     }
 
-    /**
-     * @return Collection<int, animal>
-     */
-    public function getAnimal(): Collection
+    public function getAnimal(): ?animal
     {
         return $this->animal;
     }
 
-    public function addAnimal(animal $animal): static
+    public function setAnimal(?animal $animal): static
     {
-        if (!$this->animal->contains($animal)) {
-            $this->animal->add($animal);
-        }
+        $this->animal = $animal;
 
         return $this;
     }
 
-    public function removeAnimal(animal $animal): static
-    {
-        $this->animal->removeElement($animal);
-
-        return $this;
-    }
 }
