@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AnimalRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -45,6 +47,17 @@ class Animal
     #[ORM\ManyToOne(inversedBy: 'animals')]
     #[ORM\JoinColumn(nullable: false)]
     private ?habitat $habitat = null;
+
+    /**
+     * @var Collection<int, CompteRenduVeterinaire>
+     */
+    #[ORM\ManyToMany(targetEntity: CompteRenduVeterinaire::class, mappedBy: 'animal')]
+    private Collection $compteRenduVeterinaires;
+
+    public function __construct()
+    {
+        $this->compteRenduVeterinaires = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -167,6 +180,33 @@ class Animal
     public function setHabitat(?habitat $habitat): static
     {
         $this->habitat = $habitat;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CompteRenduVeterinaire>
+     */
+    public function getCompteRenduVeterinaires(): Collection
+    {
+        return $this->compteRenduVeterinaires;
+    }
+
+    public function addCompteRenduVeterinaire(CompteRenduVeterinaire $compteRenduVeterinaire): static
+    {
+        if (!$this->compteRenduVeterinaires->contains($compteRenduVeterinaire)) {
+            $this->compteRenduVeterinaires->add($compteRenduVeterinaire);
+            $compteRenduVeterinaire->addAnimal($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCompteRenduVeterinaire(CompteRenduVeterinaire $compteRenduVeterinaire): static
+    {
+        if ($this->compteRenduVeterinaires->removeElement($compteRenduVeterinaire)) {
+            $compteRenduVeterinaire->removeAnimal($this);
+        }
 
         return $this;
     }
