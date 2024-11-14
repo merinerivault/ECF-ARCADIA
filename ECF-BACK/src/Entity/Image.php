@@ -18,7 +18,7 @@ class Image
     /**
      * @var Collection<int, Animal>
      */
-    #[ORM\OneToMany(targetEntity: Animal::class, mappedBy: 'image', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Animal::class, mappedBy: 'Image', orphanRemoval: true)]
     private Collection $animals;
 
     /**
