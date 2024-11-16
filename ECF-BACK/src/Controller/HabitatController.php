@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/api/service', name: 'app_api_service_')]
+#[Route('/api/habitat', name: 'app_api_habitat_')]
 
 class HabitatController extends AbstractController
 {

@@ -3,33 +3,79 @@
 namespace App\Controller;
 
 use App\Entity\Service;
+use App\Form\ServiceType;
 use App\Repository\ServiceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/api/service', name: 'app_api_service_')]
-
+#[Route('/api/service')]
 class ServiceController extends AbstractController
 {
-    public function __construct(private EntityManagerInterface $manager, private ServiceRepository $repository)
+    #[Route(name: 'app_service_index', methods: ['GET'])]
+    public function index(ServiceRepository $serviceRepository): Response
     {
+        return $this->render('service/index.html.twig', [
+            'services' => $serviceRepository->findAll(),
+        ]);
     }
-    
-    #[Route(methods: 'POST')]
-    public function new(): Response
+
+    #[Route(methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $service = new Service(); // Définir la variable employe
+        $service = new Service();
+        $form = $this->createForm(ServiceType::class, $service);
+        $form->handleRequest($request);
 
-        // Tell Doctrine you want to (eventually) save the employe (no queries yet)
-        $this->manager->persist($service); // Utilise la bonne variable
-        // Actually executes the queries (i.e. the INSERT query)
-        $this->manager->flush();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($service);
+            $entityManager->flush();
 
-        return $this->json(
-            ['message' => "Service resource created with {$service->getId()} id"], // Utilise la bonne variable ici aussi
-            Response::HTTP_CREATED,
-        );
-    } 
+            return $this->redirectToRoute('app_service_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('service/new.html.twig', [
+            'service' => $service,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/{id}', name: 'app_service_show', methods: ['GET'])]
+    public function show(Service $service): Response
+    {
+        return $this->render('service/show.html.twig', [
+            'service' => $service,
+        ]);
+    }
+
+    #[Route('/{id}/edit', name: 'app_service_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Service $service, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(ServiceType::class, $service);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_service_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('service/edit.html.twig', [
+            'service' => $service,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/{id}', name: 'app_service_delete', methods: ['POST'])]
+    public function delete(Request $request, Service $service, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$service->getId(), $request->getPayload()->getString('_token'))) {
+            $entityManager->remove($service);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_service_index', [], Response::HTTP_SEE_OTHER);
+    }
 }
