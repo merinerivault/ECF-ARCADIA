@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Animal;
+use App\Entity\Habitat;
+use App\Entity\Image;
 use App\Repository\AnimalRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,18 +20,38 @@ class AnimalController extends AbstractController
     }
     
     #[Route(methods: 'POST')]
-    public function new(): Response
-    {
-        $animal = new Animal(); // Définir la variable employe
+public function new(): Response
+{
+    $animal = new Animal();
+    $animal->setNom('test');
+    $animal->setEspece('test');
+    $animal->setDateNaissance(new \DateTime('1997-01-19'));
+    $animal->setDescription('test');
+    $animal->setDatePassage(new \DateTime('1997-01-19'));
+    $animal->setEtatSante('test');
+    $animal->setGrammeNourriture(100);
+    $animal->setNourriture('test');
 
-        // Tell Doctrine you want to (eventually) save the employe (no queries yet)
-        $this->manager->persist($animal); // Utilise la bonne variable
-        // Actually executes the queries (i.e. the INSERT query)
-        $this->manager->flush();
+    // Récupérer un habitat existant
+    $habitat = $this->manager->getRepository(Habitat::class)->findOneBy(['nom' => 'jungle']);
+    if (!$habitat) {
+        throw new \Exception('Habitat not found');
+    }
+    $animal->setHabitat($habitat);
 
-        return $this->json(
-            ['message' => "Animal resource created with {$animal->getId()} id"], // Utilise la bonne variable ici aussi
-            Response::HTTP_CREATED,
-        );
-    } 
+    // Récupérer une image existante
+    $image = $this->manager->getRepository(Image::class)->findOneBy(['path' => '11']);
+    if (!$image) {
+        throw new \Exception('Image not found');
+    }
+    $animal->setImage($image);
+
+    $this->manager->persist($animal);
+    $this->manager->flush();
+
+    return $this->json(
+        ['message' => "Animal resource created with {$animal->getId()} id"],
+        Response::HTTP_CREATED,
+    );
+}
 }

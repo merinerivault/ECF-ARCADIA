@@ -42,11 +42,11 @@ class Animal
 
     #[ORM\ManyToOne(inversedBy: 'animals')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?image $image = null;
+    private ?Image $image = null;
 
     #[ORM\ManyToOne(inversedBy: 'animals')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?habitat $habitat = null;
+    private ?Habitat $habitat = null;
 
     /**
      * @var Collection<int, CompteRenduVeterinaire>

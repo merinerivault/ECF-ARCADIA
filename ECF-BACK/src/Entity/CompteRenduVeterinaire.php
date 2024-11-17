@@ -24,11 +24,11 @@ class CompteRenduVeterinaire
 
     #[ORM\ManyToOne(inversedBy: 'compteRenduVeterinaires')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?veterinaire $veterinaire = null;
+    private ?Veterinaire $veterinaire = null;
 
     #[ORM\ManyToOne(inversedBy: 'compteRenduVeterinaires')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?animal $animal = null;
+    private ?Animal $animal = null;
 
 
     public function getId(): ?int
@@ -60,24 +60,24 @@ class CompteRenduVeterinaire
         return $this;
     }
 
-    public function getVeterinaire(): ?veterinaire
+    public function getVeterinaire(): ?Veterinaire
     {
         return $this->veterinaire;
     }
 
-    public function setVeterinaire(?veterinaire $veterinaire): static
+    public function setVeterinaire(?Veterinaire $veterinaire): static
     {
         $this->veterinaire = $veterinaire;
 
         return $this;
     }
 
-    public function getAnimal(): ?animal
+    public function getAnimal(): ?Animal
     {
         return $this->animal;
     }
 
-    public function setAnimal(?animal $animal): static
+    public function setAnimal(?Animal $animal): static
     {
         $this->animal = $animal;
 

@@ -33,6 +33,11 @@ class Image
     #[ORM\OneToMany(targetEntity: Habitat::class, mappedBy: 'image', orphanRemoval: true)]
     private Collection $habitats;
 
+    #[ORM\Column(length: 50)]
+    private ?string $nom = null;
+
+    private ?string $path = null;
+
     public function __construct()
     {
         $this->animals = new ArrayCollection();
@@ -134,4 +139,28 @@ class Image
 
         return $this;
     }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): static
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+    public function getPath(): ?string // Getter pour "path"
+    {
+        return $this->path;
+    }
+
+    public function setPath(string $path): static // Setter pour "path"
+    {
+        $this->path = $path;
+
+        return $this;
+    }
+
 }
