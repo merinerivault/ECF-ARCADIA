@@ -15,8 +15,17 @@ class AvisController extends AbstractController
 {
     // CREATE (POST)
     #[Route('', name: 'avis_create', methods: ['POST'])]
-    public function createImage(EntityManagerInterface $manager): Response
+    public function createImage(Request $request, EntityManagerInterface $manager, AvisRepository $avisRepository): Response
     {
+        $data = json_decode($request->getContent(), true);
+        $imageId = $data['image_id'] ?? null;
+        $habitatId = $data['habitat_id'] ?? null;
+
+        // Vérification des IDs
+        if (!$imageId || !$habitatId) {
+            return $this->json(['error' => 'Missing image_id or habitat_id.'], Response::HTTP_BAD_REQUEST);
+        }
+
         $avis = new Avis();
         $avis->setPseudo('test');
         $avis->setCommentaire('test');
