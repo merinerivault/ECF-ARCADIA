@@ -11,141 +11,125 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[Route('/api/service')]
 class ServiceController extends AbstractController
 {
-    // CREATE (POST) - Créer un nouveau service
+    private SerializerInterface $serializer;
+
+    public function __construct(SerializerInterface $serializer)
+    {
+        $this->serializer = $serializer;
+    }
+
+    // CREATE (POST)
     #[Route('', name: 'service_create', methods: ['POST'])]
     public function create(
         Request $request,
         EntityManagerInterface $manager,
-        ImageRepository $imageRepository
+        ImageRepository $imageRepository,
+        ValidatorInterface $validator
     ): JsonResponse {
-        $data = json_decode($request->getContent(), true);
+        $data = $request->getContent();
 
-        // Récupérer les informations depuis la requête
-        $nom = $data['nom'] ?? null;
-        $description = $data['description'] ?? null;
-        $imageId = $data['image_id'] ?? null;
-
-        // Vérifier que les champs requis sont présents
-        if (!$nom || !$description || !$imageId) {
-            return $this->json(['error' => 'Missing required fields.'], Response::HTTP_BAD_REQUEST);
+        try {
+            $service = $this->serializer->deserialize($data, Service::class, 'json');
+        } catch (\Exception $e) {
+            return $this->json(['error' => 'Invalid JSON: ' . $e->getMessage()], Response::HTTP_BAD_REQUEST);
         }
 
-        // Récupérer l'image associée
+        $decodedData = json_decode($data, true);
+        $imageId = $decodedData['image_id'] ?? null;
+
+        if (!$imageId) {
+            return $this->json(['error' => 'Missing image_id.'], Response::HTTP_BAD_REQUEST);
+        }
+
         $image = $imageRepository->find($imageId);
+
         if (!$image) {
             return $this->json(['error' => 'Image not found.'], Response::HTTP_NOT_FOUND);
         }
 
-        // Créer et remplir l'entité Service
-        $service = new Service();
-        $service->setNom($nom);
-        $service->setDescription($description);
         $service->setImage($image);
 
-        // Sauvegarder dans la base de données
+        // Validate the Service entity
+        $errors = $validator->validate($service);
+        if (count($errors) > 0) {
+            return $this->json(['error' => (string) $errors], Response::HTTP_BAD_REQUEST);
+        }
+
         $manager->persist($service);
         $manager->flush();
-
-        return $this->json([
-            'message' => 'Service created successfully',
-            'id' => $service->getId(),
-        ], Response::HTTP_CREATED);
+        return $this->json(['message' => 'Service created successfully', 'id' => $service->getId()], Response::HTTP_CREATED);
     }
 
-    // READ (GET) - Récupérer tous les services
+    // READ ALL (GET)
     #[Route('', name: 'service_list', methods: ['GET'])]
     public function list(ServiceRepository $serviceRepository): JsonResponse
     {
         $services = $serviceRepository->findAll();
+        $json = $this->serializer->serialize($services, 'json', ['groups' => 'service:read']);
 
-        $data = array_map(function (Service $service) {
-            return [
-                'id' => $service->getId(),
-                'nom' => $service->getNom(),
-                'description' => $service->getDescription(),
-                'image_id' => $service->getImage()?->getId(),
-            ];
-        }, $services);
-
-        return $this->json($data, Response::HTTP_OK);
+        return new JsonResponse($json, Response::HTTP_OK, [], true);
     }
 
-    // READ (GET) - Récupérer un service par ID
+    // READ ONE (GET)
     #[Route('/{id}', name: 'service_read', methods: ['GET'])]
-    public function read(int $id, ServiceRepository $serviceRepository): JsonResponse
+    public function read(Service $service): JsonResponse
     {
-        $service = $serviceRepository->find($id);
-
-        if (!$service) {
-            return $this->json(['error' => 'Service not found.'], Response::HTTP_NOT_FOUND);
-        }
-
-        return $this->json([
-            'id' => $service->getId(),
-            'nom' => $service->getNom(),
-            'description' => $service->getDescription(),
-            'image_id' => $service->getImage()?->getId(),
-        ], Response::HTTP_OK);
+        $json = $this->serializer->serialize($service, 'json', ['groups' => 'service:read']);
+        return new JsonResponse($json, Response::HTTP_OK, [], true);
     }
 
-    // UPDATE (PUT) - Mettre à jour un service
+    // UPDATE (PUT)
     #[Route('/{id}', name: 'service_update', methods: ['PUT'])]
     public function update(
-        int $id,
+        Service $service,
         Request $request,
-        ServiceRepository $serviceRepository,
+        EntityManagerInterface $manager,
         ImageRepository $imageRepository,
-        EntityManagerInterface $manager
+        ValidatorInterface $validator
     ): JsonResponse {
-        $service = $serviceRepository->find($id);
+        $data = $request->getContent();
+        $decodedData = json_decode($data, true);
 
-        if (!$service) {
-            return $this->json(['error' => 'Service not found.'], Response::HTTP_NOT_FOUND);
+        try {
+            $this->serializer->deserialize($data, Service::class, 'json', ['object_to_populate' => $service]);
+        } catch (\Exception $e) {
+            return $this->json(['error' => 'Invalid JSON: ' . $e->getMessage()], Response::HTTP_BAD_REQUEST);
         }
 
-        $data = json_decode($request->getContent(), true);
+        $imageId = $decodedData['image_id'] ?? null;
 
-        // Mettre à jour les champs si présents
-        if (isset($data['nom'])) {
-            $service->setNom($data['nom']);
-        }
-        if (isset($data['description'])) {
-            $service->setDescription($data['description']);
-        }
-        if (isset($data['image_id'])) {
-            $image = $imageRepository->find($data['image_id']);
+        if ($imageId) {
+            $image = $imageRepository->find($imageId);
             if (!$image) {
                 return $this->json(['error' => 'Image not found.'], Response::HTTP_NOT_FOUND);
             }
             $service->setImage($image);
         }
 
-        // Sauvegarder les changements
-        $manager->flush();
-
-        return $this->json([
-            'message' => 'Service updated successfully',
-            'id' => $service->getId(),
-        ], Response::HTTP_OK);
-    }
-
-    // DELETE (DELETE) - Supprimer un service
-    #[Route('/{id}', name: 'service_delete', methods: ['DELETE'])]
-    public function delete(int $id, ServiceRepository $serviceRepository, EntityManagerInterface $manager): JsonResponse
-    {
-        $service = $serviceRepository->find($id);
-
-        if (!$service) {
-            return $this->json(['error' => 'Service not found.'], Response::HTTP_NOT_FOUND);
+        $errors = $validator->validate($service);
+        if (count($errors) > 0) {
+            return $this->json(['error' => (string) $errors], Response::HTTP_BAD_REQUEST);
         }
 
+        $manager->flush();
+
+        return $this->json(['message' => 'Service updated successfully'], Response::HTTP_OK);
+    }
+
+    // DELETE (DELETE)
+    #[Route('/{id}', name: 'service_delete', methods: ['DELETE'])]
+    public function delete(Service $service, EntityManagerInterface $manager): JsonResponse
+    {
         $manager->remove($service);
         $manager->flush();
 
         return $this->json(['message' => 'Service deleted successfully'], Response::HTTP_OK);
     }
 }
+
